@@ -1,4 +1,4 @@
-# PHP Chrome HTML to PDF
+# PHP Chrome HTML to PDFF
 
 A PHP library for converting HTML to PDF using Chrome/Chromium.
 
