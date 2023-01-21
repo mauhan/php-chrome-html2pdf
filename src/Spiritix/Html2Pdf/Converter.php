@@ -57,6 +57,8 @@ class Converter
      */
     private $nodePath = 'node';
 
+    private array $puppeteerOptions = [];
+
     /**
      * Initialize converter.
      *
@@ -64,10 +66,11 @@ class Converter
      * @param OutputInterface $output
      * @param array           $options Shortcut for setting multiple options
      */
-    public function __construct(InputInterface $input, OutputInterface $output, array $options = [])
+    public function __construct(InputInterface $input, OutputInterface $output, array $options = [], array $puppeteerOptions = [])
     {
         $this->input = $input;
         $this->output = $output;
+        $this->puppeteerOptions = $puppeteerOptions;
 
         if (!empty($options)) {
             $this->setOptions($options);
@@ -209,7 +212,13 @@ class Converter
     private function buildCommand(): string
     {
         $options = ProcessUtil::escapeShellArgument(json_encode($this->getOptions(), JSON_UNESCAPED_SLASHES));
+        $puppeteerOptions = ProcessUtil::escapeShellArgument(json_encode($this->puppeteerOptions, JSON_UNESCAPED_SLASHES));
+
         $command = $this->getBinaryPath() . ' -o ' . $options;
+
+        if(sizeof($this->puppeteerOptions) > 0) {
+            $command .= ' -po ' . $puppeteerOptions;
+        }
 
         return $command;
     }
