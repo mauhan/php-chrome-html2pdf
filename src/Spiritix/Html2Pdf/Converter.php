@@ -215,10 +215,7 @@ class Converter
         $puppeteerOptions = ProcessUtil::escapeShellArgument(json_encode($this->puppeteerOptions, JSON_UNESCAPED_SLASHES));
 
         $command = $this->getBinaryPath() . ' -o ' . $options;
-
-        if(sizeof($this->puppeteerOptions) > 0) {
-            $command .= ' -po ' . $puppeteerOptions;
-        }
+        $command .= ' -po ' . $puppeteerOptions;
 
         return $command;
     }
